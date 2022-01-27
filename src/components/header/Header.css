@@ -1,0 +1,29 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+.header-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: 800px;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    color: #202020;
+}
+
+.header-pyt{
+    color:rgb(91, 128, 207);
+    text-decoration: underline;
+}
