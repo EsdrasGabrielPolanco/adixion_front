@@ -2,8 +2,18 @@ import { fetchFromAPI } from "../config/api";
 
 // VERTICALS
 
-export const login = async () => {
-    const res = await fetchFromAPI("getFatherVerticals");
+export const login = async (data) => {
+    // const res = await fetchFromAPI("login", data);
+    const res = await fetch('http://localhost:3000/login',{
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
     return res;
 }
 

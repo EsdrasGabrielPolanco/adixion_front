@@ -1,43 +1,55 @@
 import React, { useEffect, useState } from "react";
 
 import Header from "../../components/header/Header";
-import JobDetailMainSection from "../../components/job-detail-components/job-detail-main-section/JobDetailMainSection";
-import JobDetailDetailSection from "../../components/job-detail-components/job-detail-detail-section/JobDetailDetailSection";
-import JobDetailPriceSection from "../../components/job-detail-components/job-detail-price-section/JobDetailPriceSection";
+// import JobDetailMainSection from "../../components/job-detail-components/job-detail-main-section/JobDetailMainSection";
+// import JobDetailDetailSection from "../../components/job-detail-components/job-detail-detail-section/JobDetailDetailSection";
+// import JobDetailPriceSection from "../../components/job-detail-components/job-detail-price-section/JobDetailPriceSection";
 
-import { getJobByTypeAndTitle } from "../../api/apiCalls";
+import { login } from "../../api/apiCalls";
 import { formatJobUrl } from "../../utils/formater"
 
 
-import "./JobDetailPage.css";
+// import "./Login.css";
 
-const JobDetailPage = (props) => {
+const Login = (props) => {
 
-    const jobTitle = window.location.href.toString().split("/")[3].split("?")[1];
-    const vertical = props.job;
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const [job, setJob] = useState();
 
-    useEffect( () => {
-        searchJobDetails();
-    },[]);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    const searchJobDetails = async () =>{
-        const formatedParams = formatJobUrl(jobTitle, vertical);
-        const jobDetails = await getJobByTypeAndTitle(formatedParams.jobTitle, formatedParams.vertical);
-        setJob(jobDetails);
+        let res = await login({email: email, password: password});
+
+        console.log(res)
     }
 
     return(
         <div className="job-detail-page">
             <Header/>
-            <JobDetailMainSection
-                job = {job}
-            />
-            <JobDetailDetailSection/>  
-            <JobDetailPriceSection/>  
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="email">Email:</label>
+                <input 
+                    id="email"
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <label htmlFor="password">Password:</label>
+                <input 
+                    id="password"
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <button type="submit">Login</button>
+            </form>
         </div>
     )
 }
 
-export default JobDetailPage;
+export default Login;
