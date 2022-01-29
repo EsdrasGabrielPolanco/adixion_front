@@ -1,40 +1,53 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Header from "../../components/header/Header";
-// import JobDetailMainSection from "../../components/job-detail-components/job-detail-main-section/JobDetailMainSection";
-// import JobDetailDetailSection from "../../components/job-detail-components/job-detail-detail-section/JobDetailDetailSection";
-// import JobDetailPriceSection from "../../components/job-detail-components/job-detail-price-section/JobDetailPriceSection";
 
 import { login } from "../../api/apiCalls";
-import { formatJobUrl } from "../../utils/formater"
+import logo from "../../assets/logo.png"
+
+import "./login.css";
 
 
-// import "./Login.css";
+
 
 const Login = (props) => {
+    const history = useHistory()
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isError, setIsError] = useState(false);
+    const [errorText, setErrorText] = useState("");
+
 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        let res = await login({email: email, password: password});
-
-        console.log(res)
+        let res = await login({email: email, password: password})
+        
+        if (res.status != 201){
+            setErrorText(res.message)
+            setIsError(true)
+        }else if(res.status == 201){
+            localStorage.setItem("accesToken",res.token)
+            history.push("/home")
+        }
+    }
+    const handleRegister = ()=>{
+        history.push("/register")
     }
 
     return(
-        <div className="job-detail-page">
-            <Header/>
-            <form onSubmit={handleSubmit}>
+        <div className="main">
+            <img src={logo} alt="main-logo" srcset="" className="main-logo" />
+            <form className="formulario" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email:</label>
                 <input 
                     id="email"
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="input"
                 />
 
                 <label htmlFor="password">Password:</label>
@@ -44,11 +57,15 @@ const Login = (props) => {
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                />
+                    className="input"
+                    />
 
-                <button type="submit">Login</button>
+                    { isError && (<span className="errorLogin">{errorText}</span>)}
+                <button className="login-button" type="submit">Login</button>
             </form>
+            <span onClick={handleRegister} className="register-redirect">¿No tienes una cuenta? Registrate!</span>
         </div>
+
     )
 }
 

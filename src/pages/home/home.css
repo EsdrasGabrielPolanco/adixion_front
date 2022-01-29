@@ -1,0 +1,20 @@
+.register-redirect{
+    margin-top: 20px;
+    cursor: pointer;
+}
+.register-redirect:hover{
+    margin-bottom: solid 1.5px  var(--adixion-gradient);
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.main-logo{
+    width: 290px;
+}
+body{
+    font-family: "Roboto", time;
+}
