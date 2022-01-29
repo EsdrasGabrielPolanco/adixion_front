@@ -1,21 +1,23 @@
 import React, {  useState } from "react";
 import {useParams} from "react-router-dom";
-// import JobDetailPage from "../job-detail/JobDetailPage";
+import { useHistory } from "react-router-dom";
+
+import logo from "../../assets/logo.png"
 
 
 const ServicesPage = () => {
-    const [Job] = useState(useParams().job)
-  
-    // if(Job) {
-    //     return <JobDetailPage
-    //                 job={Job}
-    //             />
-    // }
-    
+    const history = useHistory()
+
+    const logOut = ()=>{
+        history.push("/login")
+        localStorage.clear()
+    }
     return(
-        <>
-            <p> <u>Wolly Services</u> </p>
-        </>
+        <div className="main">
+            <img src={logo} alt="main-logo" srcset="" className="main-logo" />
+            <h2> <u>Adixion Capital FX</u> </h2>
+            <p className="" onClick={logOut}>cerrar sesion</p>
+        </div>
     )
 }
 
